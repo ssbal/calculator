@@ -1,22 +1,11 @@
-function add(a, b) {
-  return a + b;
-}
+const add = (a, b) => a + b;
+const sub = (a, b) => a - b;
+const mul = (a, b) => a * b;
+const div = (a, b) => a / b;
 
-function sub(a, b) {
-  return a - b;
-}
-
-function mul(a, b) {
-  return a * b;
-}
-
-function div(a, b) {
-  return a / b;
-}
-
-let num1 = prompt('Enter a number');
-let operator = prompt('Action');
-let num2 = prompt('Enter second number');
+// let num1 = prompt('Enter a number');
+// let operator = prompt('Action');
+// let num2 = prompt('Enter second number');
 
 function operate(op, num1, num2) {
   n1 = Number(num1);
@@ -40,5 +29,3 @@ function operate(op, num1, num2) {
 
   console.log(result);
 }
-
-operate(operator, num1, num2);
