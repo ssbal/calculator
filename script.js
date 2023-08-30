@@ -7,6 +7,7 @@ const clearOp = document.querySelector('#clear');
 let subject = '';
 let finalSubject = '';
 let operator = null;
+let visit = 0;
 
 const add = (a, b) => a + b;
 const sub = (a, b) => a - b;
@@ -46,10 +47,10 @@ numbers.forEach((number) => {
   });
 });
 
-let visit = 0;
 actions.forEach((action) => {
   action.addEventListener('click', (event) => {
-    visit++;
+    if (subject) visit++;
+
     if (visit === 1) {
       operator = event.target.dataset.action;
       finalSubject = subject;
@@ -67,10 +68,11 @@ actions.forEach((action) => {
 
 equalOp.addEventListener('click', () => {
   if (visit === 1 && subject && finalSubject) {
-    display.textContent = operate(operator, finalSubject, subject);
+    let result = operate(operator, finalSubject, subject);
+    display.textContent = result;
+    finalSubject = result;
+    subject = result;
     visit = 0;
-    subject = '';
-    finalSubject = '';
     operator = null;
   }
 });
