@@ -1,15 +1,17 @@
 const display = document.querySelector('.display');
 const numbers = document.querySelectorAll('.numbers > button');
-let subject = 0;
+const actions = document.querySelectorAll('.actions > button');
+const equalOp = document.querySelector('#equal');
+const clearOp = document.querySelector('#clear');
+
+let subject = '';
+let finalSubject = '';
+let operator = null;
 
 const add = (a, b) => a + b;
 const sub = (a, b) => a - b;
 const mul = (a, b) => a * b;
 const div = (a, b) => a / b;
-
-// let num1 = prompt('Enter a number');
-// let operator = prompt('Action');
-// let num2 = prompt('Enter second number');
 
 function operate(op, num1, num2) {
   n1 = Number(num1);
@@ -33,14 +35,42 @@ function operate(op, num1, num2) {
       result = 0;
   }
 
-  console.log(result);
+  return result;
 }
 
 numbers.forEach((number) => {
   number.addEventListener('click', (event) => {
     let number = event.target.dataset.value;
-
-    display.textContent = number;
-    subject = number;
+    subject += number;
+    display.textContent = subject;
   });
+});
+
+let visit = 0;
+actions.forEach((action) => {
+  action.addEventListener('click', (event) => {
+    visit++;
+    if (visit === 1) {
+      operator = event.target.dataset.action;
+      finalSubject = subject;
+      subject = '';
+    } else if (visit === 2) {
+      let result = operate(operator, finalSubject, subject);
+      display.textContent = result;
+      finalSubject = result;
+      operator = event.target.dataset.action;
+      subject = '';
+      visit--;
+    }
+  });
+});
+
+equalOp.addEventListener('click', () => {
+  if (visit === 1 && subject && finalSubject) {
+    display.textContent = operate(operator, finalSubject, subject);
+    visit = 0;
+    subject = '';
+    finalSubject = '';
+    operator = null;
+  }
 });
