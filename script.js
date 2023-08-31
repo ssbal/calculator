@@ -71,11 +71,13 @@ actions.forEach((action) => {
 });
 
 equalOp.addEventListener('click', () => {
-  let result = operate(operator, finalSubject, subject);
+  if (subject && finalSubject && operator) {
+    let result = operate(operator, finalSubject, subject);
 
-  display.textContent = result;
-  finalSubject = result;
-  subject = '';
+    display.textContent = result;
+    finalSubject = result;
+    subject = '';
+  }
 });
 
 clearOp.addEventListener('click', () => {
