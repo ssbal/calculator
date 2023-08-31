@@ -77,3 +77,11 @@ equalOp.addEventListener('click', () => {
   finalSubject = result;
   subject = '';
 });
+
+clearOp.addEventListener('click', () => {
+  subject = '';
+  finalSubject = '';
+  operator = null;
+  firstVisit = true;
+  display.textContent = 0;
+});
