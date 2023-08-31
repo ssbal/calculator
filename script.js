@@ -7,7 +7,6 @@ const clearOp = document.querySelector('#clear');
 let subject = '';
 let finalSubject = '';
 let operator = null;
-let visit = 0;
 
 const add = (a, b) => a + b;
 const sub = (a, b) => a - b;
@@ -47,32 +46,41 @@ numbers.forEach((number) => {
   });
 });
 
+let visit = 0;
+let previousOperator;
+
 actions.forEach((action) => {
   action.addEventListener('click', (event) => {
-    if (subject) visit++;
+    if (subject || finalSubject) {
+      if (visit === 0) {
+        operator = event.target.dataset.action;
+        finalSubject = subject;
+        subject = '';
+        visit = 1;
+      } else if (visit === 1) {
+        finalSubject = operate(operator, finalSubject, subject);
+        operator = event.target.dataset.action;
 
-    if (visit === 1) {
-      operator = event.target.dataset.action;
-      finalSubject = subject;
-      subject = '';
-    } else if (visit === 2) {
-      let result = operate(operator, finalSubject, subject);
-      display.textContent = result;
-      finalSubject = result;
-      operator = event.target.dataset.action;
-      subject = '';
-      visit--;
+        display.textContent = finalSubject;
+        subject = '';
+        visit = 2;
+      } else if (visit === 2) {
+        finalSubject = operate(operator, finalSubject, subject);
+        operator = event.target.dataset.action;
+
+        display.textContent = finalSubject;
+        subject = '';
+      }
     }
   });
 });
 
 equalOp.addEventListener('click', () => {
-  if (visit === 1 && subject && finalSubject) {
+  if (subject && finalSubject) {
     let result = operate(operator, finalSubject, subject);
     display.textContent = result;
-    finalSubject = result;
+    finalSubject = '';
     subject = result;
-    visit = 0;
     operator = null;
   }
 });
