@@ -51,26 +51,29 @@ actions.forEach((action) => {
   action.addEventListener('click', (event) => {
     if (subject || finalSubject) {
       if (firstVisit) {
-        operator = event.target.dataset.action;
         finalSubject = subject;
+        operator = event.target.dataset.action;
         subject = '';
         firstVisit = false;
       } else {
-        finalSubject = operate(operator, finalSubject, subject);
-        operator = event.target.dataset.action;
+        if (subject) {
+          finalSubject = operate(operator, finalSubject, subject);
+          operator = event.target.dataset.action;
 
-        display.textContent = finalSubject;
-        subject = '';
+          display.textContent = finalSubject;
+          subject = '';
+        } else {
+          operator = event.target.dataset.action;
+        }
       }
     }
   });
 });
 
 equalOp.addEventListener('click', () => {
-  if (subject && finalSubject) {
-    let result = operate(operator, finalSubject, subject);
-    display.textContent = result;
-    subject = '';
-    finalSubject = result;
-  }
+  let result = operate(operator, finalSubject, subject);
+
+  display.textContent = result;
+  finalSubject = result;
+  subject = '';
 });
