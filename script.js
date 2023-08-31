@@ -7,6 +7,7 @@ const clearOp = document.querySelector('#clear');
 let subject = '';
 let finalSubject = '';
 let operator = null;
+let firstVisit = true;
 
 const add = (a, b) => a + b;
 const sub = (a, b) => a - b;
@@ -46,25 +47,15 @@ numbers.forEach((number) => {
   });
 });
 
-let visit = 0;
-let previousOperator;
-
 actions.forEach((action) => {
   action.addEventListener('click', (event) => {
     if (subject || finalSubject) {
-      if (visit === 0) {
+      if (firstVisit) {
         operator = event.target.dataset.action;
         finalSubject = subject;
         subject = '';
-        visit = 1;
-      } else if (visit === 1) {
-        finalSubject = operate(operator, finalSubject, subject);
-        operator = event.target.dataset.action;
-
-        display.textContent = finalSubject;
-        subject = '';
-        visit = 2;
-      } else if (visit === 2) {
+        firstVisit = false;
+      } else {
         finalSubject = operate(operator, finalSubject, subject);
         operator = event.target.dataset.action;
 
@@ -79,8 +70,7 @@ equalOp.addEventListener('click', () => {
   if (subject && finalSubject) {
     let result = operate(operator, finalSubject, subject);
     display.textContent = result;
-    finalSubject = '';
-    subject = result;
-    operator = null;
+    subject = '';
+    finalSubject = result;
   }
 });
