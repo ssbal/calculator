@@ -47,42 +47,40 @@ function operate(op, num1, num2) {
 
 numbers.forEach((number) => {
   number.addEventListener('click', (event) => {
+    if (subject.length > 10) return;
     let number = event.target.dataset.value;
+    if (subject === '0') subject = '';
     subject += number;
+
     display.textContent = subject;
   });
 });
 
 actions.forEach((action) => {
   action.addEventListener('click', (event) => {
-    if (subject || finalSubject) {
-      if (firstVisit) {
-        finalSubject = subject;
-        operator = event.target.dataset.action;
-        subject = '';
-        firstVisit = false;
-      } else {
-        if (subject) {
-          // To avoid inconsistencies after pressing equals to
-          finalSubject = operate(operator, finalSubject, subject);
+    if (firstVisit) {
+      finalSubject = subject;
+      operator = event.target.dataset.action;
+      subject = '';
+      firstVisit = false;
+    } else {
+      if (subject) {
+        // To avoid inconsistencies after pressing equals to
+        finalSubject = operate(operator, finalSubject, subject);
 
-          if (finalSubject === 'dbz') {
-            // handle divide-by-zero
-            display.textContent = 'Invalid';
-            subject = '';
-            finalSubject = '';
-            operator = null;
-            firstVisit = true;
-          } else {
-            operator = event.target.dataset.action;
-
-            display.textContent = finalSubject;
-            subject = '';
-          }
+        if (finalSubject === 'dbz') {
+          // handle divide-by-zero
+          display.textContent = 'Invalid';
+          initialize();
         } else {
-          // to keep the operator clicked after pressing equals to
           operator = event.target.dataset.action;
+
+          display.textContent = finalSubject;
+          subject = '';
         }
+      } else {
+        // to keep the operator clicked after pressing equals to
+        operator = event.target.dataset.action;
       }
     }
   });
