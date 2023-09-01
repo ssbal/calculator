@@ -69,6 +69,7 @@ actions.forEach((action) => {
       operator = event.target.dataset.action;
       subject = '';
       firstVisit = false;
+      pointCounter = false;
     } else {
       if (subject) {
         // To avoid inconsistencies after pressing equals to
@@ -83,6 +84,7 @@ actions.forEach((action) => {
 
           display.textContent = finalSubject;
           subject = '';
+          pointCounter = false;
         }
       } else {
         // to keep the operator clicked after pressing equals to
@@ -92,7 +94,6 @@ actions.forEach((action) => {
   });
 });
 
-let holdEndResult;
 equalOp.addEventListener('click', () => {
   if (subject && finalSubject && operator) {
     let result = operate(operator, finalSubject, subject);
@@ -105,8 +106,8 @@ equalOp.addEventListener('click', () => {
       display.textContent = result;
       finalSubject = result;
       subject = '';
-      holdEndResult = result;
       operator = null;
+      pointCounter = false;
     }
   }
 });
