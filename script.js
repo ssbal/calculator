@@ -4,12 +4,13 @@ const actions = document.querySelectorAll('.actions > button');
 const equalOp = document.querySelector('#equal');
 const clearOp = document.querySelector('#clear');
 
-let subject, finalSubject, operator, firstVisit;
+let subject, finalSubject, operator, firstVisit, pointCounter;
 function initialize() {
   subject = '0';
   finalSubject = '';
   operator = null;
   firstVisit = true;
+  pointCounter = false;
 }
 
 const add = (a, b) => a + b;
@@ -47,11 +48,16 @@ function operate(op, num1, num2) {
 
 numbers.forEach((number) => {
   number.addEventListener('click', (event) => {
-    if (subject.length > 10) return;
+    if (!operator && !firstVisit) initialize();
+
     let number = event.target.dataset.value;
+
+    if (subject.length > 10) return;
+    if (pointCounter && number === '.') return;
+    if (number === '.') pointCounter = true;
+
     if (subject === '0') subject = '';
     subject += number;
-
     display.textContent = subject;
   });
 });
@@ -86,6 +92,7 @@ actions.forEach((action) => {
   });
 });
 
+let holdEndResult;
 equalOp.addEventListener('click', () => {
   if (subject && finalSubject && operator) {
     let result = operate(operator, finalSubject, subject);
@@ -98,6 +105,8 @@ equalOp.addEventListener('click', () => {
       display.textContent = result;
       finalSubject = result;
       subject = '';
+      holdEndResult = result;
+      operator = null;
     }
   }
 });
