@@ -6,7 +6,7 @@ const clearOp = document.querySelector('#clear');
 
 let subject, finalSubject, operator, firstVisit;
 function initialize() {
-  subject = '';
+  subject = '0';
   finalSubject = '';
   operator = null;
   firstVisit = true;
