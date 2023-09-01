@@ -17,7 +17,7 @@ const sub = (a, b) => a - b;
 const mul = (a, b) => a * b;
 const div = (a, b) => {
   if (b === 0) return 'dbz';
-  return a / b;
+  return (a / b).toFixed(2);
 };
 
 function operate(op, num1, num2) {
