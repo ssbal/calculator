@@ -4,10 +4,13 @@ const actions = document.querySelectorAll('.actions > button');
 const equalOp = document.querySelector('#equal');
 const clearOp = document.querySelector('#clear');
 
-let subject = '';
-let finalSubject = '';
-let operator = null;
-let firstVisit = true;
+let subject, finalSubject, operator, firstVisit;
+function initialize() {
+  subject = '';
+  finalSubject = '';
+  operator = null;
+  firstVisit = true;
+}
 
 const add = (a, b) => a + b;
 const sub = (a, b) => a - b;
@@ -92,10 +95,7 @@ equalOp.addEventListener('click', () => {
     if (result === 'dbz') {
       // handle divide-by-zero
       display.textContent = 'Invalid';
-      subject = '';
-      finalSubject = '';
-      operator = null;
-      firstVisit = true;
+      initialize();
     } else {
       display.textContent = result;
       finalSubject = result;
@@ -105,9 +105,8 @@ equalOp.addEventListener('click', () => {
 });
 
 clearOp.addEventListener('click', () => {
-  subject = '';
-  finalSubject = '';
-  operator = null;
-  firstVisit = true;
+  initialize();
   display.textContent = 0;
 });
+
+initialize();
