@@ -57,6 +57,7 @@ numbers.forEach((number) => {
     if (number === '.') pointCounter = true;
 
     if (subject === '0') subject = '';
+    if (subject === '' && number === '.') subject += '0';
     subject += number;
     display.textContent = subject;
   });
