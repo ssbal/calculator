@@ -63,45 +63,37 @@ function displayNumber(value) {
   display.textContent = subject;
 }
 
-numbers.forEach((number) => {
-  number.addEventListener('click', (event) => {
-    displayNumber(event.target.dataset.value);
-  });
-});
+function fireOperator(operand) {
+  if (firstVisit) {
+    finalSubject = subject;
+    operator = operand;
+    subject = '';
+    firstVisit = false;
+    pointCounter = false;
+  } else {
+    if (subject) {
+      // To avoid inconsistencies after pressing equals to
+      finalSubject = operate(operator, finalSubject, subject);
 
-actions.forEach((action) => {
-  action.addEventListener('click', (event) => {
-    if (firstVisit) {
-      finalSubject = subject;
-      operator = event.target.dataset.action;
-      subject = '';
-      firstVisit = false;
-      pointCounter = false;
-    } else {
-      if (subject) {
-        // To avoid inconsistencies after pressing equals to
-        finalSubject = operate(operator, finalSubject, subject);
-
-        if (finalSubject === 'dbz') {
-          // handle divide-by-zero
-          display.textContent = 'Invalid';
-          initialize();
-        } else {
-          operator = event.target.dataset.action;
-
-          display.textContent = finalSubject;
-          subject = '';
-          pointCounter = false;
-        }
+      if (finalSubject === 'dbz') {
+        // handle divide-by-zero
+        display.textContent = 'Invalid';
+        initialize();
       } else {
-        // to keep the operator clicked after pressing equals to
-        operator = event.target.dataset.action;
-      }
-    }
-  });
-});
+        operator = operand;
 
-equalOp.addEventListener('click', () => {
+        display.textContent = finalSubject;
+        subject = '';
+        pointCounter = false;
+      }
+    } else {
+      // to keep the operator clicked after pressing equals to
+      operator = operand;
+    }
+  }
+}
+
+function displayResult() {
   if (subject && finalSubject && operator) {
     let result = operate(operator, finalSubject, subject);
 
@@ -117,14 +109,14 @@ equalOp.addEventListener('click', () => {
       pointCounter = false;
     }
   }
-});
+}
 
-clearOp.addEventListener('click', () => {
+function clearScreen() {
   initialize();
   display.textContent = 0;
-});
+}
 
-bksp.addEventListener('click', () => {
+function makeCorrection() {
   if (subject.length > 1) {
     subject = subject.slice(0, subject.length - 1);
     display.textContent = subject;
@@ -132,6 +124,59 @@ bksp.addEventListener('click', () => {
     subject = '0';
     display.textContent = subject;
   }
+}
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === '/') event.preventDefault();
+
+  if (
+    event.key === '0' ||
+    event.key === '1' ||
+    event.key === '2' ||
+    event.key === '3' ||
+    event.key === '4' ||
+    event.key === '5' ||
+    event.key === '6' ||
+    event.key === '7' ||
+    event.key === '8' ||
+    event.key === '9' ||
+    event.key === '.'
+  ) {
+    displayNumber(event.key);
+  }
+
+  if (
+    event.key === '+' ||
+    event.key === '-' ||
+    event.key === '*' ||
+    event.key === '/'
+  ) {
+    fireOperator(event.key);
+  }
+
+  if (event.key === '=' || event.key === 'Enter') displayResult();
+
+  if (event.key === 'c') clearScreen();
+
+  if (event.key === 'Backspace') makeCorrection();
 });
+
+numbers.forEach((number) => {
+  number.addEventListener('click', (event) =>
+    displayNumber(event.target.dataset.value)
+  );
+});
+
+actions.forEach((action) => {
+  action.addEventListener('click', (event) =>
+    fireOperator(event.target.dataset.action)
+  );
+});
+
+equalOp.addEventListener('click', () => displayResult());
+
+clearOp.addEventListener('click', () => clearScreen());
+
+bksp.addEventListener('click', () => makeCorrection());
 
 initialize();
