@@ -71,9 +71,17 @@ button:hover {
   font-size: 24px;
 }
 
+.corrections {
+  display: flex;
+  gap: 10px;
+}
+
 #equal {
-  width: 100%;
   font-size: 24px;
+}
+
+#bksp {
+  font-size: 16px;
 }
 
 .footer {

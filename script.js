@@ -3,6 +3,7 @@ const numbers = document.querySelectorAll('.number');
 const actions = document.querySelectorAll('.actions > button');
 const equalOp = document.querySelector('#equal');
 const clearOp = document.querySelector('#clear');
+const bksp = document.querySelector('#bksp');
 
 let subject, finalSubject, operator, firstVisit, pointCounter;
 function initialize() {
@@ -116,6 +117,16 @@ equalOp.addEventListener('click', () => {
 clearOp.addEventListener('click', () => {
   initialize();
   display.textContent = 0;
+});
+
+bksp.addEventListener('click', () => {
+  if (subject.length > 1) {
+    subject = subject.slice(0, subject.length - 1);
+    display.textContent = subject;
+  } else if (subject.length === 1) {
+    subject = '0';
+    display.textContent = subject;
+  }
 });
 
 initialize();
