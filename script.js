@@ -1,5 +1,5 @@
 const display = document.querySelector('.display');
-const numbers = document.querySelectorAll('.numbers > button');
+const numbers = document.querySelectorAll('.number');
 const actions = document.querySelectorAll('.actions > button');
 const equalOp = document.querySelector('#equal');
 const clearOp = document.querySelector('#clear');
