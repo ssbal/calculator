@@ -47,20 +47,25 @@ function operate(op, num1, num2) {
   return result;
 }
 
+function displayNumber(value) {
+  if (!operator && !firstVisit) initialize();
+
+  let number = value;
+
+  if (subject.length > 10) return;
+  if (pointCounter && number === '.') return;
+  if (number === '.') pointCounter = true;
+
+  if (subject === '0') subject = '';
+  if (subject === '' && number === '.') subject += '0';
+  subject += number;
+
+  display.textContent = subject;
+}
+
 numbers.forEach((number) => {
   number.addEventListener('click', (event) => {
-    if (!operator && !firstVisit) initialize();
-
-    let number = event.target.dataset.value;
-
-    if (subject.length > 10) return;
-    if (pointCounter && number === '.') return;
-    if (number === '.') pointCounter = true;
-
-    if (subject === '0') subject = '';
-    if (subject === '' && number === '.') subject += '0';
-    subject += number;
-    display.textContent = subject;
+    displayNumber(event.target.dataset.value);
   });
 });
 
