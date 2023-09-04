@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: monospace;
 }
 
 body {
@@ -23,10 +23,9 @@ body {
 }
 
 .display {
-  background: linear-gradient(to right, lightgreen, mediumseagreen);
   background: mediumseagreen;
   padding: 10px;
-  font-size: 30px;
+  font-size: 40px;
   font-weight: bold;
   color: #fff;
   text-align: right;
@@ -51,12 +50,28 @@ button {
   border: none;
   border-radius: 5px;
   font-size: 18px;
-  padding: 10px 0;
   font-weight: bold;
   color: inherit;
+  height: 40px;
 }
 
 button:hover {
   cursor: pointer;
   background: #1a1a1a;
+}
+
+.actions {
+  margin: 10px 0;
+
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  font-size: 24px;
+}
+
+#equal {
+  width: 100%;
+  font-size: 28px;
 }
